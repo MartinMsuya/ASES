@@ -44,7 +44,7 @@ sudo ln -s /usr/share/openalpr/runtime_data/ocr/tessdata/lus.traineddata /usr/sh
 See User Variables below to change default settings.
 
 Still a work in progress
-Good Luck ....
+Good Luck Claude ....
 """
 from __future__ import print_function
 import sys
@@ -79,7 +79,7 @@ DB_FILE = '/home/pi/speed-camera/data/speed_cam.db' # path to speed cam database
 SPEED_DIR = '/home/pi/speed-camera'   # path to speed-camera folder
 WAIT_SECS = 30  # seconds to wait between queries for images to process
 
-ALPR_COUNTRY = "tz"   # Country Code eg 'us', 'eu' See ALPR Docs
+ALPR_COUNTRY = "us"   # Country Code eg 'us', 'eu' See ALPR Docs
 ALPR_REGION = "on"   # State/province Etc  See ALPR Docs
 ALPR_TOP_N = 3        # Max Number of plates to search per image
 

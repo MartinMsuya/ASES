@@ -8,7 +8,7 @@
 progpath="/home/pi/speed-camera"
 progname="webserver.py"
 
-echo "$0 ver 6.02 written by Claude Pageau edited by Martin"
+echo "$0 ver 6.02 written by Claude Pageau"
 echo "-----------------------------------------------"
 cd $progpath
 

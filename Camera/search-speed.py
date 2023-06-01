@@ -230,7 +230,7 @@ try:
             for i in range(1,5):
                 print("")
                 print_at(1,i,blank)
-            print_at(1,1,"%s %s Edited by Martin      " % ( progName, ver))
+            print_at(1,1,"%s %s written by Claude Pageau       " % ( progName, ver))
             print("------------------------------------------------")
             print("Found %i Target Search Image Files in %s" %
                                  ( target_total, search_dest_path))
@@ -265,7 +265,7 @@ try:
         print("Otherwise search results will be displayed with no copying (useful for testing)")
         print("")
     print("------------------------------------------------")
-    print("%s %s  edited by Martin" % (progName, ver))
+    print("%s %s  written by Claude Pageau" % (progName, ver))
     print("Done ...")
 except KeyboardInterrupt:
     print("")

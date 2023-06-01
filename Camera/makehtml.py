@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# makehtml.py written by Martin
+# makehtml.py written by Claude Pageau
 # Create linked html pages from csv log file entries
 # for easier viewing speed camera images and data on a web server
 

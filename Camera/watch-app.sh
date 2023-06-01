@@ -3,7 +3,7 @@ ver="7.10"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  # get cur dir of this script
 progName=$(basename -- "$0")
 cd $DIR
-echo "$progName $ver  edited by Martin"
+echo "$progName $ver  written by Claude Pageau"
 
 #==================================
 #   watch-app.sh User Settings

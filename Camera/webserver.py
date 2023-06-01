@@ -14,7 +14,7 @@ import urllib
 from http.server import SimpleHTTPRequestHandler
 from io import BytesIO
 
-PROG_VER = "ver 12.02 written by Claude Pageau modified by Alexandre Strube edited by Martin for python3 compatibility"
+PROG_VER = "ver 12.02 written by Claude Pageau modified by Alexandre Strube for python3 compatibility"
 '''
  SimpleHTTPServer python program to allow selection of images from right panel and display in an iframe left panel
  Use for local network use only since this is not guaranteed to be a secure web server.
@@ -227,7 +227,7 @@ httpd = socketserver.TCPServer(("", web_server_port), DirectoryHandler)
 net_interface_names = [ b'eth0', b'wlan0' ]   # byte string list of interface names to check
 ip_list = []
 for my_if in net_interface_names:
-    my_ip =     get_ip_address(my_if)
+    my_ip = get_ip_address(my_if)
     if my_ip is not None:
         ip_list.append(my_ip)
 

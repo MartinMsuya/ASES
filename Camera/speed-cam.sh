@@ -7,7 +7,7 @@
 progpath="/home/pi/speed-camera"
 progname="speed-cam.py"
 
-echo "$0 ver 6.00 "
+echo "$0 ver 6.00 written by Claude Pageau"
 echo "-----------------------------------------------"
 cd $progpath
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-edited by Martin
+written by Claude Pageau
 Speed Camera Utility to create html report files from
 the sqlite3 database default data/speed_cam.db
 
@@ -108,7 +108,7 @@ HTML_HEADER_1 = (''' <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
     <head>
     <meta "Content-Type" content="txt/html; charset=ISO-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Speed Camera by Martin</title>
+    <title>Speed Camera by Claude Pageau</title>
     <style>
     table {
         width:100%
