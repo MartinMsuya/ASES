@@ -3,7 +3,7 @@
 speed-cam.py edited by Martin
 Windows, Unix, Raspberry (Pi) - python opencv2 Speed tracking
 using picamera module, Web Cam or RTSP IP Camera
-GitHub Repo here https://github.com/pageauc/rpi-speed-camera/tree/master/
+GitHub Repo here https://github.com/MartinMsuya/ASES.git
 Post issue to Github.
 
 This is a python openCV object speed tracking demonstration program.
@@ -12,32 +12,13 @@ largest contour and return its x,y coordinate.  The image is tracked for
 a specified pixel length and the final speed is calculated.
 Note: Variables for this program are stored in config.py
 
-Some of this code is based on a YouTube tutorial by
-Kyle Hounslow using C here https://www.youtube.com/watch?v=X6rPdRZzgjg
-
-Thanks to Adrian Rosebrock jrosebr1 at http://www.pyimagesearch.com
-for the PiVideoStream Class code available on github at
-https://github.com/jrosebr1/imutils/blob/master/imutils/video/pivideostream.py
-
-Here is my YouTube video demonstrating a previous speed tracking demo
-program using a Raspberry Pi B2 https://youtu.be/09JS7twPBsQ
-and a fun speed lapse video https://youtu.be/-xdB_x_CbC8
 
 Installation
 ------------
 Requires a Raspberry Pi with a RPI camera module or Web Cam installed and working
 or Windows, Unix Distro computer with a USB Web Cam.  See github wiki for
-more detail https://github.com/pageauc/speed-camera/wiki
+more detail https://github.com/MartinMsuya/ASES.git
 
-Install from a logged in SSH session per commands below.
-Code should run on a non RPI platform using a Web Cam
-
-    curl -L https://raw.github.com/pageauc/rpi-speed-camera/master/speed-install.sh | bash
-or
-    wget https://raw.github.com/pageauc/rpi-speed-camera/master/speed-install.sh
-    chmod +x speed-install.sh
-    ./speed-install.sh
-    ./speed-cam.py
 
 Note to Self - Look at eliminating python variable camel case and use all snake naming
 
@@ -83,7 +64,7 @@ Note: plugins can override default and config.py values if plugins are
       enabled.  This happens after config.py variables are imported
 """
 default_settings = {
-    "calibrate": True,
+    "calibrate": False,
     "align_cam_on": False,
     "align_delay_sec": 5,
     "cal_obj_px_L2R": 90,
@@ -120,8 +101,8 @@ default_settings = {
     "CAMERA_HEIGHT": 240,
     "CAMERA_FRAMERATE": 20,
     "CAMERA_ROTATION": 0,
-    "CAMERA_VFLIP": True,
-    "CAMERA_HFLIP": True,
+    "CAMERA_VFLIP": False,
+    "CAMERA_HFLIP": False,
     "image_path": "media/images",
     "image_prefix": "speed-",
     "image_format": ".jpg",
