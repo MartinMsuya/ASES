@@ -1,1 +1,1 @@
-# ASE (Auotomatic Speed Enforcement) System
+# ASE (Automatic Speed Enforcement) System
