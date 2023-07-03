@@ -7,6 +7,9 @@ import numpy as np
 import boto3
 from botocore.exceptions import ClientError
 import os
+import requests as rq
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
 
 
 #CLASSIFIER FOR DETECTING CARS--------------------------------------------------
@@ -24,7 +27,7 @@ mark1 = 120 #MARK TO START TIMER
 mark2 = 360 #MARK TO END TIMER
 markGap = 15 #DISTANCE IN METRES BETWEEN THE MARKERS
 fpsFactor = 3 #TO COMPENSATE FOR SLOW PROCESSING
-speedLimit = float(input("Set Speed limit: ")) #SPEEDLIMIT
+speedLimit = 20 #SPEEDLIMIT
 startTracker = {} #STORE STARTING TIME OF CARS
 endTracker = {} #STORE ENDING TIME OF CARS
 
@@ -34,12 +37,6 @@ if not os.path.exists('overspeeding/cars/'):
 
 print('Speed Limit Set at {} Kmph'.format(speedLimit))
 
-# Connecting with Cloudflare R2 Bucket
-s3 = boto3.resource('s3',
-        endpoint_url = 'https://2bf52450aac554dba7bbf2c208c160eb.r2.cloudflarestorage.com',
-        aws_access_key_id = '6fcfed8a198cb47f1de028ce1488c654',
-        aws_secret_access_key = 'c4d55fcab6f38efc96c91d4b14b6ce9e1e1be98aaebc2401775e1984f15fb66e'
-    )
 
 def blackout(image):
     xBlack = 360
@@ -52,20 +49,30 @@ def blackout(image):
     return image
 
 #FUCTION TO SAVE CAR IMAGE, DATE, TIME, SPEED ----------------------------------
-def saveCar(speed,image):
+def saveCar(speed,image,carID):
     now = datetime.today().now()
     nameCurTime = now.strftime("%d-%m-%Y-%H-%M-%S-%f")
+
 
     link = 'overspeeding/cars/'+nameCurTime+'.jpeg'
     cv2.imwrite(link,image)
     #print(link)
 
-    # Upload the image file to the Cloudflare server R2
-    #s3 = boto3.client('s3')
     
-    #with open(link, "rb") as f:
-        #s3.upload_fileobj(f, "imageserver", "link")
-    s3.meta.client.upload_file(link, "imageserver", link)
+    #sending images straight to backend
+    image2=open(link,"wb")
+
+    multipart_data = MultipartEncoder( fields={
+                    'file': (f"{nameCurTime}.jpeg", image2, 'image/jpeg'),
+                    'speed':str(speed),
+                    'car_id':str(carID),
+                }  )
+    url = "http://192.168.115.146:8000/camera_image/"
+    response = rq.post(url, data=multipart_data,
+                      headers={'Content-Type': multipart_data.content_type} )
+
+
+
 
 
 #FUNCTION TO CALCULATE SPEED----------------------------------------------------
@@ -170,7 +177,7 @@ def trackMultipleObjects():
                 speed = estimateSpeed(carID)
                 if speed > speedLimit:
                     print('CAR-ID : {} : {} kmph - OVERSPEED'.format(carID, speed))
-                    saveCar(speed,image[ty:ty+th, tx:tx+tw])
+                    saveCar(speed,image[ty:ty+th, tx:tx+tw],carID)
                 else:
                     print('CAR-ID : {} : {} kmph'.format(carID, speed))
 
