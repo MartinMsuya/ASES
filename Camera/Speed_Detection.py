@@ -1,5 +1,3 @@
-import ftplib
-from ftplib import FTP
 import cv2 
 import dlib
 import time
@@ -7,19 +5,14 @@ from datetime import datetime
 import os
 import numpy as np
 
-# Configure FTP server connection---------------------------------------------------
-ftp = ftplib.FTP("localhost")
-ftp.login("martin", "123456")
 
 #CLASSIFIER FOR DETECTING CARS--------------------------------------------------
 carCascade = cv2.CascadeClassifier('files/HaarCascadeClassifier.xml')
 
 #TAKE VIDEO---------------------------------------------------------------------
 video = cv2.VideoCapture('files/videoTest.mp4')
-#camera = cv2.VideoCapture(0)
-#ret, frame = camera.read()
-#camera.release()
-#video = frame
+#video = cv2.VideoCapture(0)
+
 
 WIDTH = 1280 #WIDTH OF VIDEO FRAME
 HEIGHT = 720 #HEIGHT OF VIDEO FRAME
@@ -36,7 +29,7 @@ endTracker = {} #STORE ENDING TIME OF CARS
 if not os.path.exists('overspeeding/cars/'):
     os.makedirs('overspeeding/cars/')
 
-print('Speed Limit Set at 20 Kmph')
+print(f'Speed Limit Set at {speedLimit} Kmph')
 
 
 def blackout(image):
@@ -57,9 +50,6 @@ def saveCar(speed,image):
     link = 'overspeeding/cars/'+nameCurTime+'.jpeg'
     cv2.imwrite(link,image)
 
-    # Upload the image file to the FTP server
-    with open(link, "rb") as file:
-        ftp.storbinary(f"STOR {link}", file)
 
 #FUNCTION TO CALCULATE SPEED----------------------------------------------------
 def estimateSpeed(carID):
