@@ -60,14 +60,15 @@ def saveCar(speed,image,carID):
 
     
     #sending images straight to backend
-    image2=open(link,"wb")
+    image2=open(link,"rb")
+
 
     multipart_data = MultipartEncoder( fields={
                     'file': (f"{nameCurTime}.jpeg", image2, 'image/jpeg'),
                     'speed':str(speed),
-                    'car_id':str(carID),
+                    'location': "kawe",
                 }  )
-    url = "http://192.168.115.146:8000/camera_image/"
+    url = "http://127.0.0.1:8000/dashboard/camera_image/"
     response = rq.post(url, data=multipart_data,
                       headers={'Content-Type': multipart_data.content_type} )
 
