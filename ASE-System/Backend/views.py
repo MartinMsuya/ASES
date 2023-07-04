@@ -16,6 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import auth
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from requests.exceptions import RequestException
 # Create your views here.
 # Create your views here.
 
@@ -24,22 +25,32 @@ from django.contrib.auth.models import User
 def camera_images(request):
     # try:
     file =  request.FILES['file']
+    speed = request.POST['speed']
+    location = request.POST['location']
+
     default_storage.save(file.name, file)
-    regions = ['Dar', 'tz'] # Change to your country
-    with open(os.path.join(settings.MEDIA_ROOT, file.name), 'rb') as fp:
-        response = requests.post(
-            'https://api.platerecognizer.com/v1/plate-reader/',
-            data=dict(regions=regions),  # Optional
-            files=dict(upload=fp),
-            headers={'Authorization': 'Token 97b701930466ea9f17b39d28a213ea9b8ff8fffe'})
-        
-    #pprint(response.json())
-    data = response.json()
-    no_plate =(data['results'][0]['plate'])
-    no_plate=str(no_plate).upper()
-    # Save the number plate to the database
-    number_plate_obj = Test(Image=file.name, plate=no_plate)
-    number_plate_obj.save()
+    regions = ['gb', 'tz'] # Change to your country
+
+    try:
+        with open(os.path.join(settings.MEDIA_ROOT, file.name), 'rb') as fp:
+            response = requests.post(
+                'https://api.platerecognizer.com/v1/plate-reader/',
+                data=dict(regions=regions),  # Optional
+                files=dict(upload=fp),
+                headers={'Authorization': 'Token 97b701930466ea9f17b39d28a213ea9b8ff8fffe'})
+            data = response.json()
+
+            if 'results' in data and data['results']:
+                no_plate = data['results'][0]['plate']
+                no_plate = str(no_plate).upper()
+                # Save the number plate to the database
+                number_plate_obj = Numberplate(Image=file.name, No_plate=no_plate, Car_speed=speed, Location=location)
+                number_plate_obj.save()
+            else:
+                print("No license plate found in the response.")
+    except RequestException as e:
+        print("Error occurred while making the request:", str(e))
+
 
     return HttpResponse(json.dumps({"status": "1", "message": "Sucess"}), content_type = 'application/json')
     # except Exception as e:

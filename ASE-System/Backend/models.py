@@ -16,7 +16,7 @@ class Numberplate(models.Model):
     Location = models.CharField(max_length=50, default= None)
     Fine_amount = models.FloatField(default=30000)
     Status = models.CharField(max_length=10, choices=STATUS_CHOICE, default= 'Unpaid')
-    Record_date = models.DateTimeField()
+    Record_date = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):

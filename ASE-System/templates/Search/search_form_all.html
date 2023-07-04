@@ -1,0 +1,33 @@
+
+{% extends 'AdminDashboard/dashboard.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container-fluid mt-5">
+<form action="{% url 'custome:search_result_all' %}", method="POST">
+    {% csrf_token %}
+<h4 class="text-center">Check you Speed Violation Penalties </h4>
+<div>
+    <p></p>
+</div>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+  <div class="card px-3 py-4">
+      <div class="card-body">
+          <h6 class="information mt-2 mb-4">Please provide your number plate to check penalties available</h6>
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="form-group">
+                     <input type="text" class="form-control"  placeholder="Enter your number plate" oninput="this.value = this.value.toUpperCase()" id="searchText" name="number_plate" > </div>
+              </div>
+          </div>
+          </div>
+         <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"> </div> 
+         <button name="searchP" class="btn btn-dark btn-rounded" type="submit">Confirm</button>
+      </div>
+  </div>
+</div>
+</form>
+</div>
+<script src="{% static 'js/search.js' %}"></script>
+{% endblock %}
+

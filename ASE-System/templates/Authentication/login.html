@@ -1,0 +1,39 @@
+{% extends 'AdminDashboard/dashboard.html' %}
+{% load static %}
+{% block scripts %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
+{% block contents %}
+<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <form action="{% url 'authentication:login' %}" method="post">
+                {% csrf_token %}
+                <h2>Login</h2>
+                <div class="inputbox">
+                    <input type="text" name="usernamelog" id="Username" required>
+                    <label for="Username">Username</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="password" id="password" required>
+                    <label for="password">Password</label>
+                </div>
+
+                <div class="forget">
+                    <label>
+                        <input type="checkbox" name="remember" id="remember">
+                        Remember Me
+                        <a href="">Forgot Password</a>
+                    </label>
+                </div>
+                <button class="login_button" type="submit">Login</button>
+
+                <div class="Register">
+                    <p>Don't have an account <a href="{% url 'authentication:register' %}">Register</a></p> 
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

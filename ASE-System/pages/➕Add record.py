@@ -23,4 +23,4 @@ decrement = st.sidebar.button('show fewer columns ')
 if decrement:
     st.session_state.number_of_rows -= 1
 
-df=pd.pd.DataFrame(data, columns=["pk", "No_plate", "Car_speed", "Location", "Fine_amount", "Status", "Record_date", "Image"])
+df=pd.DataFrame(data, columns=["pk", "No_plate", "Car_speed", "Location", "Fine_amount", "Status", "Record_date", "Image"])

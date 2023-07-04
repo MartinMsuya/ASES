@@ -1,0 +1,16 @@
+.logo{
+border: solid;
+border-radius: 50%;
+height: 30px;
+width: 30px;
+}
+
+.img_dash{
+    height: 75%;
+    width: 90%;
+}
+
+.showpage {
+    margin: 20px 20px 0px;
+    display: block;
+}

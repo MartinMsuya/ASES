@@ -3,7 +3,7 @@ import django
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TrafficBackend.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TrafficSpeed.settings")
 django.setup()
 
 import streamlit as st
@@ -20,9 +20,9 @@ import plotly.graph_objects as go
 queryset = Numberplate.objects.all()
 data= [[obj.pk, obj.No_plate, obj.Car_speed, obj.Location, obj.Fine_amount, obj.Status, obj.Record_date, obj.Image] for obj in queryset]
 df = pd.DataFrame(data, columns=["pk", "No_plate", "Car_speed", "Location", "Fine_amount", "Status", "Record_date", "Image"])
+df = df.sort_values('Record_date', ascending=False)
 #page behaviour
 st.set_page_config(page_title="Traffic Speed", page_icon="🚚", layout="wide")
-
 
 col1,col2,col3 = st.columns(3)
 form_search = st.form(key="search")
@@ -201,7 +201,7 @@ footer = """
         }
         </style>
     <div class="footer">
-        <p>Developed by mouddyjm <a href="google.com">See more</a></p>
+        <p>Developed by mouddyjm <a href="{% url "Homepage" %}">Go Back</a></p>
         </div>
 """
 st.markdown(footer, unsafe_allow_html=True)
