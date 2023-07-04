@@ -4,8 +4,6 @@ import time
 from datetime import datetime
 import os
 import numpy as np
-import boto3
-from botocore.exceptions import ClientError
 import os
 import requests as rq
 from requests_toolbelt.multipart.encoder import MultipartEncoder
