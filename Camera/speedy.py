@@ -25,7 +25,7 @@ mark1 = 120 #MARK TO START TIMER
 mark2 = 360 #MARK TO END TIMER
 markGap = 15 #DISTANCE IN METRES BETWEEN THE MARKERS
 fpsFactor = 3 #TO COMPENSATE FOR SLOW PROCESSING
-speedLimit = 20 #SPEEDLIMIT
+speedLimit = float(input("Set Speed limit: ")) #SPEEDLIMIT
 startTracker = {} #STORE STARTING TIME OF CARS
 endTracker = {} #STORE ENDING TIME OF CARS
 
@@ -53,8 +53,10 @@ def saveCar(speed,image,carID):
 
 
     link = 'overspeeding/cars/'+nameCurTime+'.jpeg'
-    cv2.imwrite(link,image)
-    #print(link)
+    #cv2.imwrite(link,image)
+    resized_image = cv2.resize(image, (500, 500))  # Replace desired_width and desired_height with the desired dimensions
+    cv2.imwrite(link, resized_image)
+
 
     
     #sending images straight to backend
