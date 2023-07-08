@@ -32,7 +32,7 @@ def search_result(request):
         context['searched']=True
         search_content = request.POST.get('number_plate')
         try:
-            speed_violation = Numberplate.objects.all().filter(No_plate__icontains=search_content, Status = 'Unpaid').order_by('-Record_date').values('No_plate', 'Car_speed', 'Location', 'Fine_amount', 'Status', 'Record_date')
+            speed_violation = Numberplate.objects.all().filter(No_plate__icontains=search_content, Status = 'Unpaid').order_by('-Record_date').values('No_plate', 'Car_speed', 'Location', 'Fine_amount', 'Status', 'Record_date', 'Control_number')
             context['speed_violation'] = speed_violation
         except Exception:
             pass
@@ -46,8 +46,9 @@ def search_result_all(request):
         context['searched']=True
         search_content = request.POST.get('number_plate')
         try:
-            speed_violation_all = Numberplate.objects.all().filter(No_plate__icontains=search_content).order_by('-Record_date').values('No_plate', 'Car_speed', 'Location', 'Fine_amount', 'Status', 'Record_date')
+            speed_violation_all = Numberplate.objects.all().filter(No_plate__icontains=search_content).order_by('-Record_date').values('No_plate', 'Car_speed', 'Location', 'Fine_amount', 'Status', 'Record_date', 'Control_number')
             context['speed_violation_all'] = speed_violation_all
+            print(context)
         except Exception:
             pass
     return render(request, 'Search/search_results_all.html', context)

@@ -17,6 +17,7 @@ from numerize.numerize import numerize
 import plotly.subplots as sp
 import plotly.graph_objects as go
 
+#Query Data from django model
 queryset = Numberplate.objects.all()
 data= [[obj.pk, obj.No_plate, obj.Car_speed, obj.Location, obj.Fine_amount, obj.Status, obj.Record_date, obj.Image] for obj in queryset]
 df = pd.DataFrame(data, columns=["pk", "No_plate", "Car_speed", "Location", "Fine_amount", "Status", "Record_date", "Image"])
@@ -24,16 +25,18 @@ df = df.sort_values('Record_date', ascending=False)
 #page behaviour
 st.set_page_config(page_title="Traffic Speed", page_icon="🚚", layout="wide")
 
+
 col1,col2,col3 = st.columns(3)
 form_search = st.form(key="search")
 filterword = form_search.text_input(label="Search")
 submit = form_search.form_submit_button(label="submit")
 
+show_form_search = True
 
 #Remove default theme
 theme_plotly = None
 
-#CSS Style
+#Load external CSS Style
 with open('style_data.css') as f:
     st.markdown(f"<style>{f.read()}<style/>", unsafe_allow_html=True)
 
@@ -57,6 +60,8 @@ df_selection = df.query(
     "Location == @location & Status== @status "
 )
 
+
+#Create homepage
 def Homepage(df_search):
     #Data summeries
     total_record = int(df_selection['pk'].count())
@@ -66,7 +71,7 @@ def Homepage(df_search):
         st.info('Total Records', icon="➕")
         st.metric(label='sum', value=f"{total_record}")
     with total2:
-        st.info('Total Investmentn', icon="➕")
+        st.info('Total Fine Amount', icon="➕")
         st.metric(label='Total penalt amount', value=f"{total_Inv:,.0f}")
     st.markdown("""___""")
 
@@ -76,6 +81,8 @@ def Homepage(df_search):
         st.dataframe(df_search[showdata], use_container_width=True)
 
 
+
+#Graphs part
 def Graphs():
     # Group by location and count records
     records_by_location = df_selection.groupby("Location").size().reset_index(name="Count")
@@ -83,7 +90,7 @@ def Graphs():
     # Sort the records by location
     records_by_location = records_by_location.sort_values("Location")
 
-    # Create a line graph
+    # 1. Create a line graph
     fig_line = go.Figure(data=go.Scatter(x=records_by_location["Location"], y=records_by_location["Count"], mode='lines'))
 
     # Customize the line graph
@@ -100,11 +107,10 @@ def Graphs():
         x="Count",
         y="Month",
         orientation="h",
-        color_discrete_sequence=px.colors.qualitative.Pastel1,
+        color_discrete_sequence=["#0083B8"]*len(records_by_month),
         title="Records by Month",
     )
     fig_inverted_bar.update_layout(
-        title="Records by Location",
         xaxis_title="Number of Records",
         yaxis_title="Month",
         showlegend=False
@@ -114,8 +120,6 @@ def Graphs():
     color_mapping = {
         "Unpaid": "#FF7F0E",
         "Paid": "#1F77B4",
-        "Processing": "#2CA02C",
-        "Cancelled": "#D62728"
     }
     fig_pie = px.pie(
         records_by_status,
@@ -144,7 +148,7 @@ def Graphs():
     st.plotly_chart(fig_pie, use_container_width=False)
 
 
-
+#Side bar
 def sideBar():
     with st.sidebar:
         selected = option_menu(
@@ -174,10 +178,13 @@ def sideBar():
             st.warning("One or more options are mandatory!")
     if selected=="Graphs":
         try:
+
             Graphs()
         except:
             st.warning("One or more options are mandatory!")
 sideBar()
+
+
 
 #Footer 
 footer = """
@@ -201,7 +208,7 @@ footer = """
         }
         </style>
     <div class="footer">
-        <p>Developed by mouddyjm <a href="{% url "Homepage" %}">Go Back</a></p>
+        <p>ASE SYSTEM </p>
         </div>
 """
 st.markdown(footer, unsafe_allow_html=True)

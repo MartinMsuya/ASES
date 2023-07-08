@@ -43,6 +43,6 @@ class Login_View(View):
 def logoutUSer(request):
     logout(request)
     messages.success(request, 'You have been logged out')
-    return redirect('authentication:login')
+    return redirect('custome:Homepage')
 
 # Create your views here.

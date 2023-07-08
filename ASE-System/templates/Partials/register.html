@@ -1,4 +1,13 @@
+{% extends 'AdminDashboard/dashboard.html' %}
+{% load static %}
+{% static 'css/main.css' %}
+{% block contents %}
 
-<div style="display: inline-block; justify-content: center; align-items: center;">
-  Please Contact you Admin through this email <span> <a href=""> mouddyjm@gmail.com</a></span> to manually register you
+<div class="text-center mt-5">
+  <p style="font-size: 18px; font-weight: 500;">
+    Please contact your admin through this email <span><a href="mailto:mouddyjm@gmail.com">mouddyjm@gmail.com</a></span> to manually register you.
+  </p>
 </div>
+<a href="{% url 'custome:Homepage' %}" style="text-decoration: none;   color: whitesmoke; font-weight: 500; height: 50px; margin-top: 5px; margin-bottom: 5px;">Back Home</a>
+
+{% endblock contents%}

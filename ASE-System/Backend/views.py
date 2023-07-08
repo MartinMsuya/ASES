@@ -7,7 +7,7 @@ from django.core.files.storage import default_storage
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import os
-from .models import Numberplate, Test
+from .models import Numberplate, Failled
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
@@ -47,7 +47,11 @@ def camera_images(request):
                 number_plate_obj = Numberplate(Image=file.name, No_plate=no_plate, Car_speed=speed, Location=location)
                 number_plate_obj.save()
             else:
-                print("No license plate found in the response.")
+                messag= "No license plate found in the response."
+                print(messag)
+                Error_saved = Failled(Image=file.name, Message_plate=messag)
+                Error_saved.save()
+                
     except RequestException as e:
         print("Error occurred while making the request:", str(e))
 
